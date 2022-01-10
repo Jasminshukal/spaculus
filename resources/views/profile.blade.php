@@ -8,7 +8,7 @@
             <div class="card div_login">
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('UpdateProfile',$user->id) }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -55,27 +55,56 @@
 
                         <div class="row mb-3">
                             <div class="col-md-12" id="phone_container">
-                                <a href='#' class='btn btn-danger' id='NAME' onclick="clone_input('#phone_base','#phone_container');">Add Phone</a>
-                                {{-- @foreach ($user->phone_number as $item)
-                                    <div class="col-md-12" id="phone_base">
-                                        <label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label>
-                                        <input  type="number" class="form-control" name="phone[]">
-                                    </div>
-                                @endforeach --}}
-
                                 @forelse ($user->phone_number as $item)
-                                    <div class="col-md-12" id="phone_base">
-                                        <label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label>
-                                        <input  type="text" class="form-control" name="phone[]" value="{{ $item->number }}">
+                                    <div class="col-md-12" id="phone_base_{{ $item }}" style="display: flex; align-items: flex-end;">
+                                        <div class="col-md-9">
+                                            <label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label>
+                                            <input type="text" class="form-control" name="phone[]" value="{{ $item }}">
+                                        </div>
+                                        <div class="col-md-3" style="display: flex; justify-content: space-around;">
+                                            <a href='#' class='btn btn-info' id='NAME' onclick="clone_input('phone','#phone_container');">Add Phone</a>
+                                            <a href="#" class="btn btn-danger" onclick="remove_el('phone_base_{{ $item }}');">Remove</a>
+                                        </div>
                                     </div>
                                 @empty
-                                    <div class="col-md-12" id="phone_base">
-                                        <label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label>
-                                        <input  type="number" class="form-control" name="phone[]">
+                                <div class="col-md-12" id="phone_base" style="display: flex; align-items: flex-end;">
+                                        <div class="col-md-9">
+                                            <label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label>
+                                            <input  type="number" class="form-control" name="phone[]">
+                                        </div>
+                                        <div class="col-md-3" style="display: flex; justify-content: space-around;">
+                                            <a href='#' class='btn btn-info' id='NAME' onclick="clone_input('phone','#phone_container');">Add Phone</a>
+                                        </div>
                                     </div>
                                 @endforelse
-
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 mb-2" id="image_container">
+                                    <div class="col-md-12" id="image_base" style="display: flex; align-items: flex-end;">
+                                        <div class="col-md-9">
+                                            <label for="phone" class="col-form-label text-md-end">{{ __('Image') }}</label>
+                                            <input  type="file" class="form-control" name="image[]">
+                                        </div>
+                                        <div class="col-md-3" style="display: flex; justify-content: space-around;">
+                                            <a href='#' class='btn btn-info' id='NAME' onclick="clone_input('image','#image_container');">Add Image</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="div" style="display: flex;
+                                justify-content: flex-start;
+                                align-content: space-between;
+                                align-items: center;
+                                flex-wrap: nowrap;">
+                                    @foreach ($user->image as $item)
+                                    <div class="remove" id="remove_el_{{ $loop->index }}" style="margin: 1%;">
+                                        <img src="{{ asset($item) }}" alt="" style="width:150px;">
+                                        <a href='#' class='btn btn-danger' id='NAME' style="position: absolute; border-radius: 30%; margin-left: -23px; margin-top: -14px;" onclick="remove_el('remove_el_{{ $loop->index }}');">-</a>
+                                        <input type="hidden" name="old_file[]" value="{{ $item }}">
+                                    </div>
+                                    @endforeach
+                                </div>
                         </div>
 
                         <div class="row mb-0">
@@ -91,4 +120,26 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page_js')
+<script>
+    function clone_input(type,to){
+        if(type=="phone")
+        {
+            $(to).append('<div class="col-md-12" id="phone_base"><label for="phone" class="col-form-label text-md-end">{{ __('Phone No') }}</label><input  type="number" class="form-control" name="phone[]"></div>');
+        }
+        else
+        {
+
+            $(to).append('<div class="col-md-12" id="image_base"><label for="phone" class="col-form-label text-md-end">{{ __('Image') }}</label><input type="file" class="form-control" name="image[]"></div>');
+        }
+        alert('clon');
+    }
+
+    function remove_el(value)
+    {
+        $("#"+value).remove();
+    }
+</script>
 @endsection

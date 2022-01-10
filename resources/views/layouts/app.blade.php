@@ -85,11 +85,7 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-    <script>
-        function clone_input(from,to){
-            $(to).append($(from).clone().removeAttr('value'));
-            alert('clon');
-        }
-    </script>
+    @yield('page_js')
+
 </body>
 </html>

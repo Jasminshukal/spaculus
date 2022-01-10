@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return json_decode($value);
     }
+
+    public function getImageAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

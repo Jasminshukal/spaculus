@@ -31,7 +31,14 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->profile }}</td>
-                                    <td><a href="{{ route('profile',$item->id) }}" class="btn btn-info">Edit</a> <a href='#' class='btn btn-danger' id='NAME'>Delete</a></td>
+                                    <td>
+                                        <a href="{{ route('profile',$item->id) }}" class="btn btn-info">Edit</a>
+                                        @if (\Auth::user()->id==$item->id)
+
+                                        @else
+                                        <a href='{{ route('remove.user',$item->id) }}' class='btn btn-danger' id='NAME'>Delete</a></td>
+                                        @endif
+
                                 </tr>
                             @endforeach
                         </tbody>
