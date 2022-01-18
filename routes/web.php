@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::post('/profile/{id}', [App\Http\Controllers\HomeController::class, 'UpdateProfile'])->name('UpdateProfile');
 Route::get('User/{id}',[HomeController::class,'delete'])->name('remove.user');
+
+// Task 2
+Route::get('filemanager', [FileManagerController::class, 'index']);

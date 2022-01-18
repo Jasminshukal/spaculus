@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Laravel File Manager Tutorial Example</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <link href="{{ asset('vendor/file-manager/css/file-manager.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+    <div class="jumbotron">
+        <h1>TEST</h1>
+    </div>
+        <div class="row">
+            <div class="col-md-12" id="fm-main-block">
+                <div id="fm"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- File manager -->
+    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('fm-main-block').setAttribute('style', 'height:' + window.innerHeight + 'px');
+
+        fm.$store.commit('fm/setFileCallBack', function(fileUrl) {
+          window.opener.fmSetLink(fileUrl);
+          window.close();
+        });
+        $( document ).ajaxStart(function() {
+  $( ".log" ).text( "Triggered ajaxStart handler." );
+});
+      });
+    </script>
+</body>
+</html>
